@@ -1,6 +1,6 @@
 {
   "name": "com.nuskey8.ide.zed",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "displayName": "Zed Editor",
   "description": "Code editor integration for supporting Zed as code editor for Unity",
   "unity": "2021.3",
