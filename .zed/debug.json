@@ -1,0 +1,7 @@
+[
+  {
+    "label": "Attach to Unity",
+    "adapter": "monodbg",
+    "request": "attach"
+  }
+]

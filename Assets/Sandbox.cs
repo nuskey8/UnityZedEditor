@@ -4,6 +4,11 @@ class Sandbox : MonoBehaviour
 {
     void Start()
     {
-        Debug.Log("Hello");
+        Debug.Log("Start");
+    }
+
+    void Update()
+    {
+        Debug.Log("Update");
     }
 }

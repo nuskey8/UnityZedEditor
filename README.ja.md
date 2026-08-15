@@ -46,8 +46,15 @@ UnityZedEditorをプロジェクトに追加することで、External Script Ed
 
 - UnityエディタでC#スクリプトを開いたときにZedを起動させる
 - Consoleのログをダブルクリックした際に対象のファイルをZedで開く
-- 初回起動時にUnityプロジェクト向けの`.zed/settings.json`を生成する
+- 初回起動時にUnityプロジェクト向けの`.zed/settings.json`および`.zed/debug,json`を生成する
 - `.csproj`/`.slnx`の自動生成や、手動での再生成
+
+## デバッガとの接続
+
+現在のZedのC#拡張はデバッガをサポートしていませんが、[DotRush](https://github.com/JaneySprings/DotRush)を用いることでデバッガを利用出来ます。UnityZedEditorはDotRushで利用可能な`debug.json`を生成します。
+
+> [!NOTE]
+> 現在のDotRushのデバッガには不具合があり、Zed+Unityで正しく動作しません。[この問題を修正したfork](https://github.com/nuskey8/DotRush)を作成したため、修正されるまではこちらの利用を推奨します。詳細はこの[issue](https://github.com/JaneySprings/DotRush/issues/200)を参照してください。
 
 ## ライセンス
 
