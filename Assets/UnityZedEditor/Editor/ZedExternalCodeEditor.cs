@@ -68,8 +68,7 @@ namespace UnityZedEditor
   {
     ""label"": ""Attach to Unity"",
     ""adapter"": ""monodbg"",
-    ""request"": ""attach"",
-    ""processId"": 0
+    ""request"": ""attach""
   }
 ]
 ";
