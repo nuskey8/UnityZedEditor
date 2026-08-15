@@ -1,6 +1,5 @@
 # UnityZedEditor
 Code editor integration for supporting Zed as code editor for Unity
-Unity
 
 [![GitHub license](https://img.shields.io/github/license/nuskey8/UnityZedEditor)](./LICENSE)
 ![Unity 2021.3+](https://img.shields.io/badge/unity-2021.3+-000.svg)
@@ -47,8 +46,15 @@ Adding UnityZedEditor to your project allows you to set Zed as your External Scr
 
 - Launching Zed when opening C# scripts in the Unity editor
 - Opening the target file in Zed when double-clicking a Console log
-- Generating `.zed/settings.json` for Unity projects upon first launch
+- Generating `.zed/settings.json` and `.zed/debug.json` for Unity projects upon first launch
 - Automatic generation or manual regeneration of `.csproj`/`.slnx`
+
+## Debugger Connection
+
+The current C# extension for Zed does not support debugging, but you can use a debugger with [DotRush](https://github.com/JaneySprings/DotRush). UnityZedEditor generates a `debug.json` configuration that can be used with DotRush.
+
+> [!NOTE]
+> The current DotRush debugger has an issue that prevents it from working correctly with Zed and Unity. Until the issue is fixed upstream, we recommend using [this fork with the fix](https://github.com/nuskey8/DotRush). See [this issue](https://github.com/JaneySprings/DotRush/issues/200) for details.
 
 ## License
 
