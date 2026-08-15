@@ -294,7 +294,24 @@ namespace UnityZedEditor
                     break;
                 case OperatingSystemFamily.Linux:
                     yield return "/usr/bin/zed";
+                    yield return "/usr/bin/zeditor";
                     yield return "/usr/local/bin/zed";
+                    yield return "/var/lib/flatpak/app/dev.zed.Zed/current/active/files/bin/zed";
+                    yield return "/run/current-system/sw/bin/zed";
+                    yield return "/run/current-system/sw/bin/zeditor";
+
+                    var userName = Environment.UserName;
+                    if (!string.IsNullOrEmpty(userName))
+                    {
+                        var userProfileBin = Path.Combine(
+                            "/etc/profiles/per-user",
+                            userName,
+                            "bin"
+                        );
+                        yield return Path.Combine(userProfileBin, "zed");
+                        yield return Path.Combine(userProfileBin, "zeditor");
+                    }
+
                     yield return Path.Combine(
                         Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
                         ".local",
@@ -411,7 +428,10 @@ namespace UnityZedEditor
                 return false;
 
             var name = Path.GetFileNameWithoutExtension(path);
-            if (string.Equals(name, "zed", StringComparison.OrdinalIgnoreCase))
+            if (
+                string.Equals(name, "zed", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(name, "zeditor", StringComparison.OrdinalIgnoreCase)
+            )
                 return true;
 
             return string.Equals(name, "cli", StringComparison.OrdinalIgnoreCase)
