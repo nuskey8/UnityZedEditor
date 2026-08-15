@@ -1,0 +1,37 @@
+{
+  "file_scan_exclusions": [
+    "**/.git",
+    "**/.svn",
+    "**/.hg",
+    "**/.jj",
+    "**/CVS",
+    "**/.DS_Store",
+    "**/Thumbs.db",
+    "**/.classpath",
+    "**/.settings",
+    "**/.vs",
+    "**/Library",
+    "**/library",
+    "**/Temp",
+    "**/temp",
+    "**/Obj",
+    "**/obj",
+    "**/Logs",
+    "**/logs",
+    "**/UserSettings"
+  ],
+  "file_types": {
+    "YAML": [
+      "*.asset",
+      "*.meta",
+      "*.prefab",
+      "*.unity",
+      "*.mat",
+      "*.anim",
+      "*.controller",
+      "*.overrideController",
+      "*.playable",
+      "*.mask"
+    ]
+  }
+}

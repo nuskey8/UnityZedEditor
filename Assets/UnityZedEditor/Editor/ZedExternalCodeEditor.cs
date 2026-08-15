@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.Unity.VisualStudio.Editor;
@@ -25,6 +26,44 @@ namespace UnityZedEditor
         static readonly Dictionary<string, Task<string>> PendingVersionReads = new(
             StringComparer.OrdinalIgnoreCase
         );
+        const string ZedSettings = @"{
+  ""file_scan_exclusions"": [
+    ""**/.git"",
+    ""**/.svn"",
+    ""**/.hg"",
+    ""**/.jj"",
+    ""**/CVS"",
+    ""**/.DS_Store"",
+    ""**/Thumbs.db"",
+    ""**/.classpath"",
+    ""**/.settings"",
+    ""**/.vs"",
+    ""**/Library"",
+    ""**/library"",
+    ""**/Temp"",
+    ""**/temp"",
+    ""**/Obj"",
+    ""**/obj"",
+    ""**/Logs"",
+    ""**/logs"",
+    ""**/UserSettings""
+  ],
+  ""file_types"": {
+    ""YAML"": [
+      ""*.asset"",
+      ""*.meta"",
+      ""*.prefab"",
+      ""*.unity"",
+      ""*.mat"",
+      ""*.anim"",
+      ""*.controller"",
+      ""*.overrideController"",
+      ""*.playable"",
+      ""*.mask""
+    ]
+  }
+}
+";
 
         static ZedExternalCodeEditor()
         {
@@ -48,7 +87,11 @@ namespace UnityZedEditor
             return false;
         }
 
-        public void Initialize(string editorInstallationPath) { }
+        public void Initialize(string editorInstallationPath)
+        {
+            if (IsZedExecutable(editorInstallationPath))
+                EnsureZedSettings();
+        }
 
         public void OnGUI()
         {
@@ -72,6 +115,7 @@ namespace UnityZedEditor
 
         public void SyncAll()
         {
+            EnsureZedSettings();
             ProjectGenerator.Sync();
         }
 
@@ -83,6 +127,7 @@ namespace UnityZedEditor
             string[] importedFiles
         )
         {
+            EnsureZedSettings();
             ProjectGenerator.SyncIfNeeded(
                 addedFiles.Union(deletedFiles).Union(movedFiles).Union(movedFromFiles),
                 importedFiles
@@ -106,6 +151,8 @@ namespace UnityZedEditor
 
             try
             {
+                EnsureZedSettings();
+
                 if (!ProjectGenerator.HasSolutionBeenGenerated())
                     ProjectGenerator.Sync();
 
@@ -179,7 +226,32 @@ namespace UnityZedEditor
             var rect = EditorGUI.IndentedRect(EditorGUILayout.GetControlRect());
             rect.width = 252;
             if (GUI.Button(rect, "Regenerate project files"))
+            {
+                EnsureZedSettings();
                 ProjectGenerator.Sync();
+            }
+        }
+
+        static void EnsureZedSettings()
+        {
+            try
+            {
+                var projectDirectory = Directory.GetParent(Application.dataPath)?.FullName;
+                if (string.IsNullOrEmpty(projectDirectory))
+                    return;
+
+                var zedDirectory = Path.Combine(projectDirectory, ".zed");
+                var settingsPath = Path.Combine(zedDirectory, "settings.json");
+                if (File.Exists(settingsPath))
+                    return;
+
+                Directory.CreateDirectory(zedDirectory);
+                File.WriteAllText(settingsPath, ZedSettings, new UTF8Encoding(false));
+            }
+            catch (Exception exception)
+            {
+                Debug.LogWarning($"Could not create .zed/settings.json: {exception.Message}");
+            }
         }
 
         static IEnumerable<CodeEditor.Installation> DiscoverInstallations()
