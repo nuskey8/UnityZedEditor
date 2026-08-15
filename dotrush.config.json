@@ -1,0 +1,7 @@
+{
+    "dotrush": {
+        "roslyn": {
+            "projectOrSolutionFiles": [ "UnityZedEditor.slnx" ]
+        }
+    }
+}
