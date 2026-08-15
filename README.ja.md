@@ -25,7 +25,7 @@ UnityZedEditorはUnityでZedを利用するためのエディタ拡張です。E
 `Window > Package Management > Package Manager`を開き、`"+" > Install package from git URL...`を押して以下のURLを入力します。
 
 ```
-https://github.com/nuskey8/UnityZedEditor.git
+https://github.com/nuskey8/UnityZedEditor.git?path=Assets/UnityZedEditor
 ```
 
 または、`Packages/manifest.json`を開き、`dependencies`に以下の1行を追加します。
