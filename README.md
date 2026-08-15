@@ -25,7 +25,7 @@ UnityZedEditor is an editor extension that allows you to use Zed in Unity. In ad
 Open `Window > Package Management > Package Manager`, click `"+" > Install package from git URL...`, and enter the following URL.
 
 ```
-https://github.com/nuskey8/UnityZedEditor.git
+https://github.com/nuskey8/UnityZedEditor.git?path=Assets/UnityZedEditor
 ```
 
 Alternatively, open `Packages/manifest.json` and add the following line to `dependencies`.
