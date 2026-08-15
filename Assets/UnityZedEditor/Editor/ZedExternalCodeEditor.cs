@@ -64,6 +64,15 @@ namespace UnityZedEditor
   }
 }
 ";
+        const string ZedDebugConfiguration = @"[
+  {
+    ""label"": ""Attach to Unity"",
+    ""adapter"": ""monodbg"",
+    ""request"": ""attach"",
+    ""processId"": 0
+  }
+]
+";
 
         static ZedExternalCodeEditor()
         {
@@ -242,15 +251,24 @@ namespace UnityZedEditor
 
                 var zedDirectory = Path.Combine(projectDirectory, ".zed");
                 var settingsPath = Path.Combine(zedDirectory, "settings.json");
-                if (File.Exists(settingsPath))
-                    return;
+                var debugConfigurationPath = Path.Combine(zedDirectory, "debug.json");
 
                 Directory.CreateDirectory(zedDirectory);
-                File.WriteAllText(settingsPath, ZedSettings, new UTF8Encoding(false));
+                if (!File.Exists(settingsPath))
+                    File.WriteAllText(settingsPath, ZedSettings, new UTF8Encoding(false));
+
+                if (!File.Exists(debugConfigurationPath))
+                {
+                    File.WriteAllText(
+                        debugConfigurationPath,
+                        ZedDebugConfiguration,
+                        new UTF8Encoding(false)
+                    );
+                }
             }
             catch (Exception exception)
             {
-                Debug.LogWarning($"Could not create .zed/settings.json: {exception.Message}");
+                Debug.LogWarning($"Could not create Zed project settings: {exception.Message}");
             }
         }
 
